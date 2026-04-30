@@ -1,4 +1,4 @@
-# Extended Data 2 phage-antibiotic analysis
+# Extended Data 2 
 
 pkgs <- c("readxl", "dplyr", "tidyr", "stringr", "ggplot2", "tcltk")
 for (p in pkgs) {

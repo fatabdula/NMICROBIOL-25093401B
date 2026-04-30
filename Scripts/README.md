@@ -1,4 +1,4 @@
-# phage-FMT-rUTI-case-series
+# NMICROBIOL-25093401B, Scripts of the Figure 2 and Extended Data Figure 1-7
 
 This repository contains simplified R scripts documenting the main analysis workflows for a case series on combined phage therapy and fecal microbiota transplantation for recurrent urinary tract infection.
 

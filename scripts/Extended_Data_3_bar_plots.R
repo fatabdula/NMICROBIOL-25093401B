@@ -1,4 +1,4 @@
-# Extended Data 3 ACSS bar plot
+# Extended Data 3 
 
 pkgs <- c("readxl", "dplyr", "tidyr", "ggplot2", "stringr", "tcltk")
 for (p in pkgs) {

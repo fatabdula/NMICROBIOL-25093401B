@@ -47,16 +47,19 @@ nm <- names(raw_ab)
 sample_col  <- pick_col(nm, c("^sample_name$"))
 case_col    <- pick_col(nm, c("^case$"))
 patient_col <- pick_col(nm, c("^patient$"))
-days_col    <- pick_col(nm, c("^days$"))
+days_col    <- pick_col(nm, c("^days$", "^day$"))
 visit_col   <- pick_col(nm, c("^visit$"))
 phage_col   <- pick_col(nm, c("results_phage", "phage_total", "phage"))
 bact_col    <- pick_col(nm, c("results_bacteria", "bacteria_cfu", "cfu"))
 
+needed_ab <- c(days_col, phage_col, bact_col)
+if (any(is.na(needed_ab))) stop("Required Figure 2a-b columns were not found")
+
 fig2ab <- raw_ab %>%
   mutate(
     patient = coalesce(
-      if (!is.na(case_col)) as.character(.data[[case_col]]) else NA_character_,
       if (!is.na(patient_col)) as.character(.data[[patient_col]]) else NA_character_,
+      if (!is.na(case_col)) as.character(.data[[case_col]]) else NA_character_,
       if (!is.na(sample_col)) as.character(.data[[sample_col]]) else NA_character_
     ),
     day = as.numeric(.data[[days_col]]),
@@ -67,7 +70,13 @@ fig2ab <- raw_ab %>%
   mutate(
     patient = gsub(".*(Patient ?[123]).*", "\\1", patient),
     patient = gsub("Patient([123])", "Patient \\1", patient),
-    patient = recode(patient, "B002" = "Patient 1", "B005" = "Patient 2", "B006" = "Patient 3")
+    patient = recode(
+      patient,
+      "Patient1" = "Patient 1",
+      "Patient2" = "Patient 2",
+      "Patient3" = "Patient 3",
+      .default = patient
+    )
   ) %>%
   filter(!is.na(patient), !is.na(day)) %>%
   group_by(patient, day) %>%
@@ -109,6 +118,10 @@ make_uti_long <- function(df) {
   } else {
     y_col <- intersect(c("utis_per_year", "utis_year", "utis"), nm)[1]
 
+    if (!all(c("patient", "treatment") %in% nm) || is.na(y_col)) {
+      stop("Required Figure 2c columns were not found")
+    }
+
     df %>%
       transmute(
         patient = .data[["patient"]],
@@ -120,7 +133,19 @@ make_uti_long <- function(df) {
 
 fig2c <- make_uti_long(raw_c) %>%
   mutate(
-    patient = paste0("Patient ", as.character(patient)),
+    patient = as.character(patient),
+    patient = gsub(".*(Patient ?[123]).*", "\\1", patient),
+    patient = gsub("Patient([123])", "Patient \\1", patient),
+    patient = recode(
+      patient,
+      "1" = "Patient 1",
+      "2" = "Patient 2",
+      "3" = "Patient 3",
+      "Patient1" = "Patient 1",
+      "Patient2" = "Patient 2",
+      "Patient3" = "Patient 3",
+      .default = patient
+    ),
     period = factor(tolower(as.character(period)), levels = c("pre", "post"), labels = c("Pre", "Post")),
     uti_per_year = as.numeric(uti_per_year)
   ) %>%
@@ -142,4 +167,3 @@ write.csv(fig2c, file.path(save_dir, "Figure_2c_processed.csv"), row.names = FAL
 ggsave(file.path(save_dir, "Figure_2a_ecoli_line_plot.pdf"), p_ecoli, width = 6, height = 4)
 ggsave(file.path(save_dir, "Figure_2b_phage_line_plot.pdf"), p_phage, width = 6, height = 4)
 ggsave(file.path(save_dir, "Figure_2c_uti_line_plot.pdf"), p_uti, width = 5, height = 4)
-

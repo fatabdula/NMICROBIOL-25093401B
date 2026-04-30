@@ -8,6 +8,7 @@ The scripts show the core steps used for data processing, transformation, plotti
 
 ```text
 scripts/
+  data
   Figure_2.R
   Extended_Data_1.R
   Extended_Data_2.R

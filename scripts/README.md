@@ -2,7 +2,7 @@
 
 This repository contains simplified R scripts documenting the main analysis workflows for a case series on combined phage therapy and fecal microbiota transplantation for recurrent urinary tract infection.
 
-The scripts show the core steps used for data processing, transformation, plotting, and statistical analysis. Raw data is provided as source data in the corresponding manuscrtipt.
+The scripts show the core steps used for data processing, transformation, plotting, and statistical analysis. Raw data is provided as source data in the corresponding manuscript.
 
 ## Repository structure
 

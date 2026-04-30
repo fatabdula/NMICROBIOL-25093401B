@@ -8,11 +8,11 @@ The scripts show the core steps used for data processing, transformation, plotti
 
 ```text
 scripts/
-  Figure_2_line_plots.R
-  Extended_Data_1_TRA_analysis.R
-  Extended_Data_2_phage_antibiotic_HSA.R
-  Extended_Data_3_bar_plots.R
-  Extended_Data_4_line_plots.R
-  Extended_Data_5_boxplots_statistics.R
-  Extended_Data_6_bar_plots.R
-  Extended_Data_7_TRA_analysis.R
+  Figure_2.R
+  Extended_Data_1.R
+  Extended_Data_2.R
+  Extended_Data_3.R
+  Extended_Data_4.R
+  Extended_Data_5.R
+  Extended_Data_6.R
+  Extended_Data_7.R

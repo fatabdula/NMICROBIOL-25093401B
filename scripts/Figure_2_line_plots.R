@@ -1,4 +1,4 @@
-# Figure 2 line plots
+# Figure 2 
 
 pkgs <- c("readxl", "dplyr", "tidyr", "ggplot2", "tcltk")
 for (p in pkgs) {
